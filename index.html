@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos</title>
+    <style>
+        body {
+            text-align: center;
+            background: #8e44ad;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -14px;
+        }
+
+        h1,
+        p,
+        label,
+        strong {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        strong {
+            font-size: 32px;
+            text-transform: uppercase;
+
+        }
+
+        .formContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .formContainer label {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Primeiro exercício -->
+    <h1>Transformar notas</h1>
+    <p>Vamos converter sua nota de formato numérico para letras de equivalência.</p>
+    <form action="" onsubmit="getInput(event)">
+        <input type="number" id="nota" maxlength="2">
+        <input type="submit" value="Enviar">
+    </form>
+    <p>Sua nota foi: <strong id="result"></strong></p>
+    <hr>
+
+    <!-- Segundo exercício -->
+    <h1>Fluxo de caixa Familiar</h1>
+    <div class="formContainer">
+        <form action="" onsubmit="Family.income(event)">
+            <label for="entrada">Ganho</label>
+            <input type="number" id="income">
+            <input type="submit" value="Enviar">
+
+        </form>
+        <div class="credit"></div>
+        <form action="" onsubmit="Family.expense(event)">
+            <label for="saida">Gasto</label>
+            <input type="number" id="expense" placeholder="-" name="saida">
+            <input type="submit" value="Enviar">
+        </form>
+        <div class="loss"></div>
+    </div>
+    <br>
+    <div>
+        <button onclick="Family.calculateBalance()">Total</button>
+        <p>Total: <strong id="total"></strong></p>
+    </div>
+    <hr>
+    <!---- Terceiro exercício ---->
+    
+    <h1>Celsius em Fahrenheit</h1>
+    <p>Digite a temperatura em Celsius</p>
+    <form action="">
+        <input type="number" id="celsius">
+        <button type="submit" onclick="ShowResult(event)">Calcular</button>
+    </form>
+    <div>
+        <p>Essa é a temperatura da converção: <strong id="resultFahrenheit"></strong></p>
+    </div>
+    <hr>
+    <!---- Quarto exercício ----->
+    <h1>Buscando e contando dados em Arrays</h1>
+
+    <script>
+        /*------ Primeiro Exercício -------*/
+
+        function getInput(event) {
+            event.preventDefault()
+            let input = document.getElementById("nota").value
+            let result = document.getElementById("result")
+
+            if (input >= 90) {
+                return result.innerHTML = "A"
+
+            }
+            if (input >= 80 && input < 90) {
+                return result.innerHTML = "B"
+
+            }
+            if (input >= 70 && input < 80) {
+                return result.innerHTML = "C"
+
+            }
+            if (input >= 60 && input < 70) {
+                return result.innerHTML = "D"
+
+            }
+            if (input < 60) {
+                return result.innerHTML = "F"
+            }
+        }
+
+        /*------ Segundo Exercício -------*/
+        let family = {
+            income: [],
+            expense: [],
+        }
+
+        const sum = (array) => {
+            let total = 0
+            for (let value of array) {
+                total += value
+                console.log(value)
+            }
+            return total
+        }
+
+        const Family = {
+            income(event) {
+                event.preventDefault()
+                let inputIncome = document.getElementById("income").value
+                family.income.push(Number(inputIncome))
+                console.log("Income", family.income)
+            },
+            expense(event) {
+                event.preventDefault()
+                let inputExpense = document.getElementById("expense").value
+                family.expense.push(Number(inputExpense))
+                console.log("Expense", family.expense)
+            },
+            calculateBalance() {
+                let resultTotal = document.getElementById("total")
+                const calculateIncomes = sum(family.income)
+                const calculateExpenses = sum(family.expense)
+
+                let total = calculateIncomes - calculateExpenses
+
+                return resultTotal.innerHTML = "R$ " + total + ",00"
+            }
+        }
+
+        /*------ Terceiro Exercício -------*/
+
+        function Calcular(value) {
+            
+            let fahrenheit = value * 9/5 + 32 
+            return fahrenheit
+        }
+        function ShowResult(event) {
+            event.preventDefault()
+            let resultHtml = document.getElementById("resultFahrenheit")
+            let temperature = document.getElementById("celsius").value
+            let transformado = Calcular(Number(temperature))
+
+            return resultHtml.innerHTML = transformado + "°F"
+            
+        }
+
+        /*------ Quarto Exercício -------*/
+        
+
+    </script>
+</body>
+
+</html>
